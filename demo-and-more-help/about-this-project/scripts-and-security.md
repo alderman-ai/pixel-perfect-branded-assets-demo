@@ -1,0 +1,72 @@
+# Scripts and security — the complete inventory
+
+You just cloned (or were handed) a folder from the internet. Healthy
+question: *what in here can run code on my machine?*
+
+**Short answer: nothing, on its own.** This repo contains **zero
+executable scripts** — no PowerShell (`.ps1`), no shell scripts, no batch
+files, no Python, no standalone JavaScript, no binaries, no installers, no
+package manifests that pull dependencies. That's deliberate design, not an
+accident: the AI assistant *is* the engine, following plain-markdown
+procedures you can read yourself in `_internal/skills/`.
+
+One honest footnote: on the author's own machine an untracked,
+gitignored `live-demo/` folder holds the stage-show machinery for the
+2026-09-17 meetup (a page loop and publishing helpers). It is not part of
+this repo — a clone never contains it — and nothing in the visitor path
+runs it.
+
+## Every piece of code in this repo, itemised
+
+This is the complete list. If code is ever added to this repo, this file
+must be updated in the same change — an assistant working here is
+instructed to keep it truthful.
+
+| where | what it is | when it runs | what it can do |
+|---|---|---|---|
+| `demo-and-more-help/filling-in-the-form/field-mapping.html` | one embedded `<script>` block, ~25 lines of JavaScript | **only** if a person deliberately opens this HTML file in a browser | draws the grey connector wires on the annotation graphic by measuring where the labels sit on the page. It stays entirely inside its own page: no network requests, no file access, no storage, no downloads |
+| `demo-and-more-help/filling-in-the-form/text-budgets.html` | HTML + CSS only — **no JavaScript** | opened manually, same as above | displays a static table |
+| `_internal/render/shell.html` | HTML + CSS only — **no JavaScript** | the assistant screenshots a filled copy of it with a headless browser during "process the queue" | displays the card so the browser can photograph it |
+| the `.svg` files | vector images, **no scripts inside** | displayed as images | draw shapes |
+
+Everything else in the repo is markdown, PNG/JPG images, and font files.
+
+## When does anything execute at all?
+
+Only when **you ask the assistant to generate a card**. It then launches
+the Chrome or Edge **already installed on your machine** in headless mode
+to screenshot the render page — using local files only. The repo's docs
+explicitly forbid downloading a browser, fetching from the network during
+renders, or adding scripts. There are no hooks, no auto-run configuration,
+nothing triggered by cloning, opening, or browsing this folder.
+
+One other thing the assistant is told to run, and it is worth knowing
+about: at the **start of a session**, if this folder is a git repo and you
+are not the author, it reads `git config user.email` and puts you on a
+branch of your own (`git switch -c session/<date>-<NN>`) so your run can't
+overwrite anyone else's work or the core template. That is ordinary local
+git — three read-only queries and one branch switch, nothing published,
+nothing sent anywhere. If the folder isn't a git repo, it is skipped
+silently.
+
+And one more, added 2026-09-07: during the demo the assistant **opens an
+image in your default picture viewer** — the finished example card before
+it asks you anything, and your own card once it is rendered. That is the
+operating system's ordinary "open this file" command (`Invoke-Item` or
+`start` on Windows, `open` on macOS, `xdg-open` on Linux) pointed at a
+PNG inside this folder; it runs no code and touches nothing else.
+
+## Related safety rails
+
+- The two generation sources (the canon template image and the blank
+  intake form) live in `_internal/core-templates-please-dont-touch/`. A
+  run only reads them, never writes them; changing one is a deliberate,
+  versioned edit. Details in that folder's README.
+- Sessions are branch-isolated (above), so a damaged core template is one
+  `git checkout main -- _internal/core-templates-please-dont-touch/` away
+  from being restored.
+- Nothing in the pipeline ever overwrites your files: over-budget text,
+  off-spec images, or geometry mismatches halt with a printed reason.
+- The bundled fonts (Inter, IBM Plex Mono) are under the SIL Open Font
+  License, redistributable, with licence texts in
+  `_internal/fonts/licenses/`.

@@ -1,0 +1,352 @@
+# Assistant orientation: branded visuals demo (Apify speaker cards)
+
+## Read this first
+
+- **Who is probably asking.** Most likely an owner, founder or creative
+  director of a small marketing agency (5 to 50 people). They could have
+  found this repo anywhere, so never assume how they got here and never
+  mention a message, an inbox or a link someone sent them. They use AI
+  daily, probably were not at the meetup the card was designed for, owe
+  nothing, and will decide within a couple of replies whether this is
+  worth their time.
+- **What they should leave with.** An AI agent can make branded images
+  where the brand parts are code, so they land on the same pixel every
+  time, while the words are generated and checked against hard character
+  limits. The same split carries over to any brand that already has web
+  components.
+- **Your first reply is always the same: the three-line menu.** Do the
+  session-branch step below silently, then show the menu (next section)
+  and nothing before it. New visitors should pick line 1; the menu says
+  so. Everything after "Read this first" is reference for when a line
+  is picked.
+- **How to talk.** Everything you say is copy the visitor reads. Short
+  replies, everyday words, one question at a time, and every reply ends
+  with one clear next step. No em dashes, no "it's not X, it's Y", no
+  emoji bullets, no exclamation points, no hype words. (These rules are
+  for your own sentences; a help page you present keeps its wording.)
+- **The event header.** Every card says "AI marketing meetup 17.09", shows
+  the Apify logo and "Join me in PRAGUE". That is the fixed design of a
+  speaker teaser for an Apify-hosted meetup on 17 Sep 2026. Say so in one
+  sentence when you first show a card, so a visitor who wasn't there
+  isn't puzzled.
+- **Questions about Alex, his services, prices or clients.** Answer only
+  from the root `README.md`, section "Who made this", and point to its
+  booking link. Never invent clients, results, prices or availability.
+- **When a line ends** (a card is delivered, or the visitor says they're
+  done), close with one line: line 2 explains why the brand never drifts,
+  and the README section "Who made this" says how to reach Alex about
+  doing this with their clients' brands.
+- **One read is enough.** This file is the whole map. Read a skill file
+  only when line 1 (or a scaffold/generate request) needs it, and a
+  help page only when line 2 or 3 presents it.
+
+## What this repo is
+
+You are in a self-contained demo repo that mass-produces LinkedIn teaser
+images for event speakers, styled as Apify actor cards. The operator gives
+you a handful of details per speaker — in chat — and two pictures (a logo
+and a roughly square photo);
+you render a pixel-faithful actor card and a card-style speaker portrait
+element into the canon template at its fixed geometry and deliver a
+finished PNG. **You are the engine** — there are deliberately no build
+scripts and no package dependencies. The only external requirement is a Chromium-based browser for
+headless rendering — Chrome, or the Edge preinstalled on Windows; never
+download one. The repo assumes an agentic assistant (Claude Code, or
+another lab's equivalent) that can read and write files here and run one
+shell command; there is no non-agentic path.
+
+## Session hygiene — one branch per session
+
+`main` is the author's branch. **Everyone else works on their own branch**,
+so two people — or two sessions on the same clone — can't clobber each
+other's queue, each other's generated PNGs, or, worst case, a core
+template.
+
+**Do this silently on the first message of a session, before the menu and
+before touching any file:**
+
+1. `git config user.email` → if it is `alex@alderman.agency`, this is the
+   author's machine. Change nothing, stay on the current branch, go
+   straight to the menu.
+2. Otherwise `git rev-parse --abbrev-ref HEAD` → if it is already a
+   `session/…` branch, stay on it; you are resuming an earlier session.
+3. Otherwise create one: `git switch -c session/<yyyy-mm-dd>-<NN>`, where
+   `<NN>` is zero-padded and the lowest free number for today (first =
+   `01`, found with `git branch --list "session/<yyyy-mm-dd>-*"`). Mention
+   it in one line *after* the menu, never before it — e.g. *"(You're on
+   branch `session/2026-09-03-01`, so nothing you do here touches anyone
+   else's copy.)"*
+
+Not a git repo, or git isn't available? Skip all of this without comment
+and carry on — nothing in the pipeline depends on git.
+
+Once you are on a session branch:
+
+- **Never commit to `main` and never push.** Commit locally as often as
+  you like; publishing anything is the author's call.
+- **Core templates stay read-only** (see the ground rules below). If one
+  has been edited or deleted, restore it from `main` rather than rebuilding
+  it: `git checkout main -- _internal/core-templates-please-dont-touch/`
+- Someone who wants a clean slate runs `git switch main` — their branch
+  keeps their work, `main` stays pristine.
+
+## Session opener — the three lines
+
+This is a demo, and most people opening it have never seen it. **On the
+first message of a session, present this menu before doing anything else**,
+whatever that message says ("show me the demo", "hi", "what is this?").
+The one exception: a first message that is already an unambiguous
+scaffold, generate or template-change request (see routing below) — route
+it directly, no menu.
+
+> This demo has an AI agent make on-brand images where the brand parts
+> are code, so they land on the same pixel every time. The example is a
+> LinkedIn speaker card in Apify's style. Pick a line (new here? start
+> with 1):
+>
+> 1. **Make your own speaker card.** A finished social media image from
+>    a few details and two pictures, in about ten minutes.
+> 2. **Learn why brand assets need deterministic code and probabilistic
+>    prose** (fixed code for the brand, AI for the words), and how this
+>    project combines both.
+> 3. **Find out how this demo was built.** The architecture, the card
+>    CSS, the template geometry and the render step, for a technical
+>    reader.
+
+Present the menu as written. Its wording follows the "How to talk"
+rules above; don't add a greeting or a summary in front of it.
+
+- **Line 1** → the visitor makes a card. Read both skill files in full
+  and follow the **"Line 1"** section of
+  `_internal/skills/apify-speaker-card.md`: **first open the finished
+  example card for the visitor** (`_internal/demo-speaker/alex-alderman-final.png`,
+  in their image viewer — reading it yourself shows them nothing) and say
+  in plain words what they will supply; then ask the speaker's name,
+  scaffold the folder, then offer the fork — fill the form yourself and
+  say "done" (the assistant reverts any frontmatter edits, then asks
+  inline for anything missing and fills it in), or give the answers in
+  chat and the assistant fills it. Then process that folder end to end,
+  narrating each stage in a line. **Every line addressed to the visitor
+  is in everyday words** — in line 1's form-filling talk that means no
+  "fence", "frontmatter", "numbered folder", "actor card", "square
+  images", per that skill's "Talking to a visitor" rules (on lines 2 and
+  3 a term is fine once the page being presented has defined it); a visitor who says they don't understand is shown the example
+  again and told what it is, not asked the same question twice.
+- **Line 2** → read `demo-and-more-help/probabilistic-vs-deterministic/INDEX.md`
+  in full. Give the visitor the concept in plain words — the INDEX's
+  opening paragraph, said conversationally, not pasted — then offer its
+  pages as a numbered pick list (title plus the INDEX's one-line
+  description for each). On a pick, read that page and present its
+  content conversationally in everyday words: keep every fact and number
+  as written, define any term the page defines (once defined it may be
+  used), drop nothing and add nothing; then offer the list again plus
+  "back to the main menu". "Back" returns to the three-line menu; picking
+  the same line again re-offers the pick list, not the opening. A visitor
+  who says they don't follow gets the same point again in simpler words,
+  never the same paragraph twice. Relative links in a page are file paths
+  from that page's folder, with URL encoding such as `%20` decoded to
+  spaces; if the visitor wants to see a card the gallery page names, open
+  the PNG in their image viewer. A free-form question asked inside the
+  line is answered from that line's pages first, then from the rest of
+  `demo-and-more-help/` if needed, staying inside the line and
+  re-offering the pick list afterwards (the "answer in a line, then show
+  the menu" rule below applies only at the main menu). Do not invent
+  claims beyond what the pages say.
+- **Line 3** → the same procedure as line 2, for a technical reader, from
+  `demo-and-more-help/how-this-was-built/INDEX.md`: read it in full, give
+  the build story conversationally (its opening section), offer its pages
+  as a numbered pick list, present a picked page keeping every fact,
+  number, command and code excerpt as written (jargon is allowed once the
+  page defines it; plain words are still good), then offer the list again
+  plus "back to the main menu". Same rules for "back", repeat picks,
+  relative links, image files and free-form questions (answered from this
+  line's pages first, then the rest of `demo-and-more-help/`, staying
+  inside the line) — the template page embeds images, offer to open them
+  in the visitor's image viewer. Do not invent claims beyond what the
+  pages say.
+- Anything else (a number outside 1–3, a question) → answer in a line,
+  then show the menu again.
+
+## Asset map — every file you may need
+
+Procedure and contract (`_internal/`):
+
+| path | what |
+|---|---|
+| `_internal/skills/apify-speaker-card.md` | **the generator's complete operating procedure — read it in full before processing anything; follow it, don't improvise.** Mass-produces Apify-styled speaker teaser images: renders a pixel-faithful Apify actor card (repurposed as a speaker card) and a card-style speaker portrait element into the canon template at its fixed geometry, one finished PNG per speaker. Holds the **"Line 1"** section that line 1 of the session menu executes (name → scaffold → fill-it-yourself or fill-it-in-chat fork → gate → render). Use when the operator picks line 1, says "process the intake forms", "process the queue", "generate the speaker cards", "new speaker <name>", or drops folders into `to-process/` |
+| `_internal/skills/new-speaker.md` | **the scaffolder's complete procedure — read it in full before scaffolding.** Adds a new speaker folder to the queue, then offers the fork: the operator fills the form by hand and says "done" (the generator's gate reverts frontmatter edits and asks for what's missing), or gives the details in chat — name, role, company, topic, minutes, blurb and the two images (audience level is fixed) — and the assistant writes them into the form (asks the name; declined → `new-speaker-<NN>`, lowest free number; a repeat name → `<name>-<NN>`, first dupe = 01). Use when the operator says "new speaker", "/new-speaker", "add a speaker", "scaffold a speaker folder", or names a person to add to the lineup |
+| `_internal/demo-speaker/` | the bundled demo speaker: a complete, filled speaker folder (`intake.md`, `README.md`, `company-logo.png`, `speaker.png`) for the repo author plus its finished card, `alex-alderman-final.png` — the worked example. Line 1 opens that PNG for the visitor before asking anything; the form is shown to visitors who ask what "done" looks like. Not an input to line 1. **Never process or edit it in place**; an explicit request to render it copies it into `to-process/` under the duplicate rule |
+| `_internal/core-templates-please-dont-touch/intake-template.md` | the input contract: every field, budget, failure mode; the operator's values live in labelled body fences (typed by hand, or filled from chat by you), mirrored into the frontmatter. Section 6 of its frontmatter holds the template's **fixed block geometry** — constants, never measured per run and never edited per speaker. Versioned in its frontmatter (`version` / `versioned_at`, currently v5; the visual template stays v4). Copied into each folder as `intake.md` |
+| `demo-and-more-help/filling-in-the-form/intake-template-completed-example.md` | the same template with every fence and frontmatter value filled in — what "done" looks like (byte-identical to the demo speaker's `intake.md`) |
+
+The queue:
+
+| path | what |
+|---|---|
+| `to-process/<speaker>/` | one folder per pending card: `intake.md`, `README.md`, `company-logo.*`, `speaker.*` |
+| `processed/<speaker>/` | the folder after success (archive — form + assets). Never overwrite here — a taken name gets `-<NN>`. Archives are historical: intakes from before the 2026-09-01 tree reorganisation reference old paths; never take current paths from an archive |
+| `generated-images/<speaker>-final.png` | the finished render, one PNG per speaker. Never overwrite here — a taken name gets `-<NN>` |
+
+Render machinery (`_internal/` — use, never restructure):
+
+| path | what |
+|---|---|
+| `_internal/render/shell.html` | the render page: verified card CSS, the `.SpeakerCard` element, all double-brace tokens. Fill a copy saved beside it as `_run-<name>.html` |
+| `_internal/render/footer-help-icon.svg` | the static footer circle icon (orange `?`; its 1px orange ring is CSS in the shell) — same on every card, never an input |
+| `_internal/render/particles.svg` | apify.com's particle pattern — the starfield's source; rebuild recipe in the core-templates README |
+| `_internal/fonts/fonts.css` | the @font-face set the shell links as `../fonts/fonts.css` — renders never touch a network |
+| `_internal/fonts/*.woff2` | Inter 400/500/600 + IBM Plex Mono 500, latin + latin-ext |
+| `_internal/fonts/licenses/` | the two OFL licence texts |
+| `_internal/speaker-folder-README.md` | copied into each new speaker folder as its `README.md` |
+| `_internal/core-templates-please-dont-touch/speaker-teaser-linkedin_v4.png` | the one canon template (1200×1200, v4 — **final for this demo**), **machine-built**: baked gradient starfield + purple card block + green speaker block. The blocks show where things land; the numbers that place them were measured once at build and live in the intake form's section 6. Supersedes the operator's original Canva export |
+
+Reference (`demo-and-more-help/` — the operator-facing help and showcase
+folder; its root holds only `INDEX.md` and `README.md`, everything else
+sits in `filling-in-the-form/`, `example-speakers/`, `about-this-project/`,
+`probabilistic-vs-deterministic/` or `how-this-was-built/`):
+
+| path | what |
+|---|---|
+| `demo-and-more-help/filling-in-the-form/Actor card field mapping.png` | annotated picture of every field and where it lands on the card |
+| `demo-and-more-help/filling-in-the-form/Actor card text budgets.png` | the character-budget table for every text field |
+| `demo-and-more-help/filling-in-the-form/field-mapping.html`, `demo-and-more-help/filling-in-the-form/text-budgets.html` | those graphics' sources, re-renderable with headless Chrome |
+| `demo-and-more-help/about-this-project/scripts-and-security.md` | the plain-English inventory of every piece of code in this repo and when it runs. **If any change adds code or scripts anywhere in the repo, this file must be updated in the same change — keep it truthful** |
+| `demo-and-more-help/about-this-project/pipeline-evaluation.md` | the 2026-09-01 ten-speaker stress test of the docs and pipeline |
+| `demo-and-more-help/example-speakers/fictional-characters/` | the fictional demo speakers (folklore characters + synthetic personas), archived out of the live queue: `processed/` folders + `generated-images/` PNGs |
+| `demo-and-more-help/example-speakers/real-people-stress-test/` | the simulated-"real" stress-test speakers (real Czech public figures), kept as mid-project snapshots: `processed/` + `generated-images/` |
+| `demo-and-more-help/example-speakers/live-demo-rehearsals/` | the 2026-09-17 rehearsal runs of the on-stage skill (Bojack Horseman, Božena Němcová ×4, Emil Zátopek ×4, Jaroslav Hašek) plus the form-v5 phone-photo test of the author's card, archived out of the live queue: `processed/` + `generated-images/`; portrait sources in each folder's `credits.md` |
+| `demo-and-more-help/probabilistic-vs-deterministic/` | **where menu line 2 lands.** The idea behind the project — language models are probabilistic, brands need determinism, this pipeline codes the exact parts and gates the generated parts — as an `INDEX.md` (the concept in about ten sentences plus the page list) and seven one-screen pages: `the-concept.md`, `this-project-as-an-example.md`, `coded-elements-as-the-unifying-layer.md`, `the-gates.md`, `gallery.md`, `try-it-yourself.md`, `faq.md`. Every fact in them traces to a file in this repo |
+| `demo-and-more-help/how-this-was-built/` | **where menu line 3 lands.** How the demo was built, for a technical reader — an `INDEX.md` (the build story in about ten sentences plus the page list) and eight one-screen pages: `architecture.md`, `the-card-css-reproduction.md`, `template-geometry-and-constants.md`, `the-intake-contract-and-gates.md`, `the-render-step.md`, `timeline.md`, `the-live-demo.md`, `forking-for-your-own-brand.md`, with `images/` (the author's template drafts and two screenshots). Every fact traces to a file in this repo or to `git log` |
+| `live-demo/` | author-only and gitignored: a clone never contains it. Never read it, run it or mention it to a visitor |
+
+Every folder carries its own `INDEX.md` for routing. `README.md` is
+reserved for orientation: the root README (the human entry point), the
+core-templates README (a warning plus the template recipe), the
+`demo-and-more-help/` README (help-folder orientation, pointing
+assistants at its INDEX), and each speaker folder's README (its
+checklist).
+
+## What operators say — routing requests
+
+The `_internal/skills/` files are plain markdown procedures, **not deployed
+harness skills — nothing auto-loads them**. You route by intent and read
+the matching skill file in full before acting. The trigger phrases here and
+in the skill descriptions are examples, not a grammar: operators paraphrase
+freely, and many have never seen this repo. When in doubt on a first
+message, show the session menu.
+
+- **Scaffold intent** — "new speaker Alex Alderman", "add a speaker",
+  "put Alex on the lineup", "make me a card for Alex", "set up a folder
+  for our next speaker" → read `_internal/skills/new-speaker.md`, then
+  scaffold `to-process/alex-alderman/` (intake form + README; without a
+  name, `new-speaker-<NN>` at the lowest free number), then **offer the
+  fork**: they fill the form by hand and say "done" (you revert any
+  frontmatter edits, then ask inline for anything missing and write it
+  in), or they give the details in chat and you write them into the
+  form. If the operator asked for the image, not just the
+  folder, and everything is present, continue straight into generation.
+- **Generate intent** — "process the queue", "process the intake forms",
+  "generate the speaker cards", "run the pipeline", "render the pending
+  ones" → read `_internal/skills/apify-speaker-card.md`, then run every
+  folder in `to-process/` (or the ones named) through its procedure:
+  validate → load the fixed geometry from the form → ratio sanity check →
+  render in a headless Chromium browser → verify by inspection → PNG to
+  `generated-images/<speaker>-final.png`, folder to `processed/`.
+- **Demo intent** — "show me the demo", "demo", "run the example", or a
+  pick of line 1 from the menu → the "Line 1" section of
+  `_internal/skills/apify-speaker-card.md` (name → scaffold → fork →
+  gate → render).
+- **Ambiguous ask** — "make me an image", "create a teaser", "I need a
+  card for LinkedIn", and similar requests that name neither workflow:
+  check `to-process/` first. If candidates are waiting, name them and ask
+  one question — process these now, or start a new speaker? If the queue
+  is empty, take it as scaffold intent (e.g. *"Sure. First, who's the
+  card for?"*).
+- **Template-change intent** — "update the template", "change the intake
+  form", "new visual template", "edit the canon template", or any request
+  that would modify a file in `core-templates-please-dont-touch/`: those
+  two files are what every card is generated from, so make the change
+  deliberately, as a versioned event — the intake form bumps `version` /
+  `versioned_at` in its frontmatter (and the completed example plus the
+  demo speaker's `intake.md` are refreshed from it); the visual template
+  bumps its `_v<N>` filename suffix and every reference to it (this file,
+  both skills, the READMEs, the completed example, the demo speaker), and
+  its blocks are measured once — exact-colour footprint, whole pixels —
+  with the eight numbers written into the intake form's section 6 as the
+  new constants. Render one card afterwards to confirm. That folder's
+  README has the details and the starfield rebuild recipe. For this demo,
+  visual template v4 is final.
+- **Maintainer shortcuts.** The author has private slash commands that
+  wrap the two procedure files. They live outside this repo, nothing here
+  depends on them, and a visitor never needs them; don't mention them.
+- **Fit question**: "could this work for my agency?", "could we do this
+  with a client's brand?", "what would it take to set up?" → answer from
+  `demo-and-more-help/probabilistic-vs-deterministic/faq.md` (its first
+  question, own brand's template) and, for a technical reader,
+  `demo-and-more-help/how-this-was-built/forking-for-your-own-brand.md`.
+  For working with Alex, point to the README section "Who made this"
+  and its booking link. Never quote prices,
+  timelines or client results.
+- **Lost human** — "what is this?", "how does this work?": show the
+  session menu; if they want more, give them the three paragraphs under
+  the card image at the top of the README in your own words (two or
+  three sentences), then point them at line 1.
+
+## Ground rules (the skill has the full list)
+
+- **Input is text and two images, nothing else.** The intake form is the
+  machine record and the contract. The operator chooses at scaffold time:
+  fill the fences by hand and say "done", after which you revert any
+  frontmatter edits (saying so kindly), ask inline for anything missing
+  or non-compliant and write the answers in yourself; or answer in chat, in which case you ask for each field with its
+  budget, validate as you go (character counts, kebab-case — offer the
+  fix, never silently alter), and write the value into both its body
+  fence and its frontmatter key yourself. Images arrive as file paths;
+  copy them into the folder, never move the original.
+- **The geometry is fixed.** The template's coloured blocks — purple =
+  actor card, green = speaker element — show where the elements land;
+  the numbers that place them were measured once when template v4 was
+  built and are constants in the intake form's section 6. A run reads
+  those eight values verbatim and never measures the image, never asks
+  the operator about them, and reverts any hand edit to the frontmatter
+  back to the template before processing. The visual template is v4 and
+  the intake form is v5: they were renumbered together at v4, and a
+  form-only change (v5 relaxed the speaker-photo rule) bumps the form
+  alone because it moves no pixel of the image and the section-6
+  constants are still the v4 measurements.
+- **Core templates change on purpose only.** A run reads them and never
+  writes them; a deliberate change follows the versioning convention
+  under template-change routing above.
+- **Halt, don't degrade.** Over-budget description, missing assets (ask:
+  resubmit vs placeholder outline), an off-spec speaker photo (PNG/JPG/JPEG, any size, width and
+  height within 25% of each other — you trim the longer side evenly to a
+  square and resize it to the slot; outside the tolerance is a halt with
+  the measured W×H and "crop it roughly square on your phone and resend"), block/card ratio mismatch — each is a stop with a
+  clear report, never a silent workaround. Never
+  trim operator text, never stretch the card, never overwrite anything.
+- **Duplicate names suffix, never block.** A repeat name is legitimate (a
+  rebuilt card, a fresh start after text edits, a namesake, a demo run):
+  wherever the name is already taken — scaffolding into `to-process/`, or
+  delivering into `processed/` / `generated-images/` — use `<name>-<NN>`,
+  the lowest free number, zero-padded, **first dupe = 01** (same NN on the
+  archive folder and the PNG). Detection is by folder/file names only; a
+  repeated frontmatter `speaker_name` breaks nothing and is never
+  consulted.
+- **The card CSS is a verified reproduction** of apify.com's ActorStoreItem
+  (400 × 153.667 at width 400; heights quantised 113.667 / 121.667 /
+  137.667 / 153.667 / 169.667 by description lines). Its oddities are
+  load-bearing — do not tidy them. The speaker element (`.SpeakerCard`)
+  renders 1:1 with fixed chrome and the fixed `Join me in PRAGUE` copy;
+  only its photo changes per speaker.
+- **Fonts are local** (Inter + IBM Plex Mono, OFL, in `_internal/fonts/`).
+  Renders never fetch from a network. **GT Walsheim must never be added to
+  this repo** — it is a commercial Grilli Type font; apify.com's headings
+  use it, this pipeline does not need it.
+- This is an unofficial, non-commercial demo. Apify's name, logo and visual
+  design belong to Apify. It is not affiliated with Apify and implies no
+  support or endorsement either way (Apify of this demo, or this demo of
+  Apify). The full disclaimer sits at the top of the README; if a visitor
+  asks about Apify, say this in one or two sentences.
+
+`CLAUDE.md` and `AGENTS.md` are identical by design — same orientation
+regardless of which assistant harness reads it.
