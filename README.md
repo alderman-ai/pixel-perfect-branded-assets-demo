@@ -33,10 +33,10 @@ Already have the folder open in your agent? Point it at `CLAUDE.md` (or `AGENTS.
 Help me create a new LinkedIn teaser image.
 ```
 
-1. Your agent answers with a three-line menu. Pick line 1.
-2. It opens the finished card above and asks who your card is for.
-3. You give it a name, job title, company, talk topic, talk length, a one-sentence blurb, a logo and a photo (roughly square; a selfie cropped by eye works). It counts the characters as you go and tells you if something won't fit.
-4. It draws the card in the browser you already have, checks the result, and hands you a finished 1200×1200 PNG.
+1. Your agent answers with a three-line menu.
+2. Option 1 leads you through the process of replicating the demo. But...
+3. I think learning the principles behind why it's useful (option 2) and how it was built (option 3) are more interesting.
+4. But if you want to verify it actually works in practice, run the demo (Option 1) :)
 
 **Is it safe to run?** The repo holds zero scripts and installs nothing. The one program it uses is the Chrome or Edge already on your machine, opened invisibly to photograph the card from files inside the folder, and nothing is downloaded at any point. Your agent also puts your work on a git branch of its own, so the files you cloned stay as they were. Every piece of code is listed in [scripts-and-security.md](demo-and-more-help/about-this-project/scripts-and-security.md).
 
