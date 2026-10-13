@@ -30,7 +30,7 @@ Read its CLAUDE.md, then show me the demo.
 Already have the folder open in your agent? Point it at `CLAUDE.md` (or `AGENTS.md`, the same file) and say:
 
 ```text
-Help me create a new LinkedIn teaser image.
+Tell me more about this demo
 ```
 
 1. Your agent answers with a three-line menu.
