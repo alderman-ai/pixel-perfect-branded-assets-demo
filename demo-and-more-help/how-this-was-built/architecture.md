@@ -50,7 +50,7 @@ image step.
 No build scripts, no package manifests, no network. The agentic assistant is
 the engine: the "skills" are plain markdown procedures in `_internal/skills/`
 that any harness can follow by reading them, not deployed harness skills that
-auto-load. `CLAUDE.md` / `AGENTS.md` (identical copies) route operator intent
+auto-load. `AGENTS.md` (which `CLAUDE.md` imports) routes operator intent
 to the right one. The single external requirement is a Chromium-based browser
 already on the machine. See
 [../about-this-project/scripts-and-security.md](../about-this-project/scripts-and-security.md)
@@ -71,7 +71,7 @@ _internal/render/                            shell.html, footer icon, particles
 _internal/fonts/                             Inter + IBM Plex Mono (OFL)
 _internal/core-templates-please-dont-touch/  intake-template.md (v5) + the v4 PNG
 demo-and-more-help/                          help, examples, this page
-CLAUDE.md / AGENTS.md                        intent routing
+AGENTS.md (CLAUDE.md imports it)             intent routing
 ```
 
 The generator's full procedure is

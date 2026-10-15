@@ -15,10 +15,10 @@
   limits. The same split carries over to any brand that already has web
   components.
 - **Your first reply is always the same: the three-line menu.** Do the
-  session-branch step below silently, then show the menu (next section)
-  and nothing before it. New visitors should pick line 1; the menu says
-  so. Everything after "Read this first" is reference for when a line
-  is picked.
+  session-branch step below first and say so in one line, then show the
+  menu (next section) and nothing else before it. New visitors should
+  pick line 1; the menu says so. Everything after "Read this first" is
+  reference for when a line is picked.
 - **How to talk.** Everything you say is copy the visitor reads. Short
   replies, everyday words, one question at a time, and every reply ends
   with one clear next step. No em dashes, no "it's not X, it's Y", no
@@ -57,25 +57,22 @@ shell command; there is no non-agentic path.
 
 ## Session hygiene — one branch per session
 
-`main` is the author's branch. **Everyone else works on their own branch**,
+`main` is the author's branch. **Every session works on its own branch**,
 so two people — or two sessions on the same clone — can't clobber each
 other's queue, each other's generated PNGs, or, worst case, a core
 template.
 
-**Do this silently on the first message of a session, before the menu and
-before touching any file:**
+**Do this on the first message of a session, before the menu and before
+touching any file, and say what you did in one line just above the menu:**
 
-1. `git config user.email` → if it is `alex@alderman.agency`, this is the
-   author's machine. Change nothing, stay on the current branch, go
-   straight to the menu.
-2. Otherwise `git rev-parse --abbrev-ref HEAD` → if it is already a
-   `session/…` branch, stay on it; you are resuming an earlier session.
-3. Otherwise create one: `git switch -c session/<yyyy-mm-dd>-<NN>`, where
+1. `git rev-parse --abbrev-ref HEAD` → if it is already a `session/…`
+   branch, stay on it; you are resuming an earlier session. Say so, e.g.
+   *"(Staying on your branch `session/2026-09-03-01`.)"*
+2. Otherwise create one: `git switch -c session/<yyyy-mm-dd>-<NN>`, where
    `<NN>` is zero-padded and the lowest free number for today (first =
-   `01`, found with `git branch --list "session/<yyyy-mm-dd>-*"`). Mention
-   it in one line *after* the menu, never before it — e.g. *"(You're on
-   branch `session/2026-09-03-01`, so nothing you do here touches anyone
-   else's copy.)"*
+   `01`, found with `git branch --list "session/<yyyy-mm-dd>-*"`). Say so,
+   e.g. *"(I put you on a new git branch, `session/2026-09-03-01`, so
+   nothing you do here touches anyone else's copy.)"*
 
 Not a git repo, or git isn't available? Skip all of this without comment
 and carry on — nothing in the pipeline depends on git.
@@ -93,7 +90,8 @@ Once you are on a session branch:
 ## Session opener — the three lines
 
 This is a demo, and most people opening it have never seen it. **On the
-first message of a session, present this menu before doing anything else**,
+first message of a session, present this menu before doing anything else**
+(apart from the one-line branch note above),
 whatever that message says ("show me the demo", "hi", "what is this?").
 The one exception: a first message that is already an unambiguous
 scaffold, generate or template-change request (see routing below) — route
@@ -114,7 +112,8 @@ it directly, no menu.
 >    reader.
 
 Present the menu as written. Its wording follows the "How to talk"
-rules above; don't add a greeting or a summary in front of it.
+rules above; don't add a greeting or a summary in front of it (the
+one-line branch note is the only thing that comes first).
 
 - **Line 1** → the visitor makes a card. Read both skill files in full
   and follow the **"Line 1"** section of
@@ -347,6 +346,3 @@ message, show the session menu.
   support or endorsement either way (Apify of this demo, or this demo of
   Apify). The full disclaimer sits at the top of the README; if a visitor
   asks about Apify, say this in one or two sentences.
-
-`CLAUDE.md` and `AGENTS.md` are identical by design — same orientation
-regardless of which assistant harness reads it.

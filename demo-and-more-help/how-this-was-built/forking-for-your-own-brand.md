@@ -30,7 +30,7 @@ stay as they are.
   they name files, not brands.
 
 The bump is a versioned event, as the template-change routing in
-`CLAUDE.md` describes: new image suffix, new form `version` /
+`AGENTS.md` describes: new image suffix, new form `version` /
 `versioned_at`, the completed example and the demo speaker refreshed, one
 card rendered to confirm both blocks are covered to the last pixel.
 

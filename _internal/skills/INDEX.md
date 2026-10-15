@@ -2,7 +2,7 @@
 
 Two plain markdown instruction files. Any agentic assistant runs one by
 reading it and following it end to end — no runner, no framework;
-`CLAUDE.md` / `AGENTS.md` route operator intent to them. Each file opens
+`AGENTS.md` (imported by `CLAUDE.md`) routes operator intent to them. Each file opens
 with a short description of when it applies.
 
 | file | when | what it does |

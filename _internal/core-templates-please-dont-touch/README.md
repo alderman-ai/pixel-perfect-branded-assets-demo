@@ -19,7 +19,7 @@ A template change is a deliberate, versioned event:
   `demo-and-more-help/filling-in-the-form/` and the bundled demo speaker's
   `intake.md` in `_internal/demo-speaker/`;
 - the visual template bumps its `_v<N>` filename suffix and every
-  reference to it (`CLAUDE.md` / `AGENTS.md`, both skills, the READMEs,
+  reference to it (`AGENTS.md`, both skills, the READMEs,
   the completed example in `demo-and-more-help/filling-in-the-form/`, the
   demo speaker's `intake.md`), and its two blocks are measured once — the
   exact-colour footprint of each (`#AE81FF`, `#20A34E`), whole pixels,

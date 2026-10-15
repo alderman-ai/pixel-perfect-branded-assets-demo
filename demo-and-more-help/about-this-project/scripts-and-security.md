@@ -41,13 +41,12 @@ renders, or adding scripts. There are no hooks, no auto-run configuration,
 nothing triggered by cloning, opening, or browsing this folder.
 
 One other thing the assistant is told to run, and it is worth knowing
-about: at the **start of a session**, if this folder is a git repo and you
-are not the author, it reads `git config user.email` and puts you on a
-branch of your own (`git switch -c session/<date>-<NN>`) so your run can't
-overwrite anyone else's work or the core template. That is ordinary local
-git — three read-only queries and one branch switch, nothing published,
-nothing sent anywhere. If the folder isn't a git repo, it is skipped
-silently.
+about: at the **start of a session**, if this folder is a git repo, it
+puts you on a branch of your own (`git switch -c session/<date>-<NN>`) so
+your run can't overwrite anyone else's work or the core template, and
+tells you so in one line before the menu. That is ordinary local git —
+two read-only queries and one branch switch, nothing published, nothing
+sent anywhere. If the folder isn't a git repo, the step is skipped.
 
 And one more, added 2026-09-07: during the demo the assistant **opens an
 image in your default picture viewer** — the finished example card before

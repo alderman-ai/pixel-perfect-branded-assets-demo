@@ -24,10 +24,10 @@ Paste this into Claude Code, Cursor, Codex or any agent that can open a folder:
 
 ```text
 Clone https://github.com/alderman-ai/pixel-perfect-branded-assets-demo and open the folder.
-Read its CLAUDE.md, then show me the demo.
+Read its AGENTS.md, then show me the demo.
 ```
 
-Already have the folder open in your agent? Point it at `CLAUDE.md` (or `AGENTS.md`, the same file) and say:
+Already have the folder open in your agent? Point it at `AGENTS.md` and say:
 
 ```text
 Tell me more about this demo
@@ -36,7 +36,7 @@ Tell me more about this demo
 1. Your agent answers with a three-line menu.
 2. Option 1 leads you through the process of replicating the demo. But...
 3. I think learning the principles behind why it's useful (option 2) and how it was built (option 3) are more interesting.
-4. And porbably more interesting than that was how the demo was presented live. It's a bit buried, but ask your llm:
+4. And probably more interesting than that was how the demo was presented live. It's a bit buried, but ask your llm:
 
 ```text
 Can you tell me more about how the demo was presented live and what was interesting about that?
@@ -72,7 +72,7 @@ CZ marketing is a small world, and I'm not going to burn my credibility by wasti
 
 ## The long version
 
-Everything below is reference for the curious. Your agent reads `CLAUDE.md` / `AGENTS.md` (identical copies, one name per convention) and doesn't need any of it.
+Everything below is reference for the curious. Your agent reads `AGENTS.md` (Claude Code reaches it through a one-line `CLAUDE.md`) and doesn't need any of it.
 
 ### The short version, in my own words
 
@@ -144,13 +144,14 @@ One check runs every time: the card's block on the backdrop must match the card 
 | `new-speaker` | `_internal/skills/new-speaker.md` | sets up one speaker folder in `to-process/`, then either lets you fill the form yourself or collects the details from you in chat and writes them in |
 | `apify-speaker-card` | `_internal/skills/apify-speaker-card.md` | the whole generator: checks the form, loads the fixed positions, renders, inspects and delivers. It also holds the "Line 1" flow the menu's first line runs |
 
-Any agent runs one just by reading it. `CLAUDE.md` / `AGENTS.md` route requests to them.
+Any agent runs one just by reading it. `AGENTS.md` routes requests to them.
 
 ### Where things are
 
 ```
 README.md                     this page
-CLAUDE.md / AGENTS.md         what your agent reads first (identical copies)
+AGENTS.md                     what your agent reads first
+CLAUDE.md                     one line, @AGENTS.md, so Claude Code loads the same file
 generated-images/             the finished PNGs (<speaker>-final.png)
 to-process/  processed/       the queue, built and moved by the agent
 demo-and-more-help/           the help folder: filling in the form, 23 example

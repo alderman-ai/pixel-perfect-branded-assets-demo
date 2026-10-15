@@ -10,7 +10,7 @@ The whole pipeline is one markdown form, two images, one static HTML page
 and one headless-browser screenshot; nothing in between is a program. The
 assistant is the engine: the "skills" are plain markdown procedures in
 `_internal/skills/` that any agentic harness can follow by reading them,
-routed by `CLAUDE.md` / `AGENTS.md`. The actor card is apify.com's
+routed by `AGENTS.md` (which `CLAUDE.md` imports). The actor card is apify.com's
 `ActorStoreItem` rebuilt in plain HTML and CSS and verified box-for-box
 against the live site to 0.001px, oddities included, because the oddities
 are what make the heights come out right. The backdrop is one machine-built

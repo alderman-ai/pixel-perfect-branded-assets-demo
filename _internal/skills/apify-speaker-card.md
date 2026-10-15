@@ -112,7 +112,7 @@ the visitor follows the "Talking to a visitor" rules below.
    headless → verified by inspection → delivered.
 6. Report as in step 7 of processing, say the finished PNG's path, and
    open the PNG for the visitor the same way as in step 1. Then close
-   with the one line `CLAUDE.md` asks for when a line ends (line 2
+   with the one line `AGENTS.md` asks for when a line ends (line 2
    explains why the brand never drifts; the README section "Who made
    this" says how to reach Alex).
 
